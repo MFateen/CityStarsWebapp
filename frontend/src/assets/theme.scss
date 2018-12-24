@@ -8,10 +8,11 @@ $my-app-warn:    mat-palette($mat-deep-orange);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 @include angular-material-theme($my-app-theme);
 
-mat-form-field {
+mat-form-field, .mat-option {
   text-align: right !important;
 }
 
 .cdk-overlay-container {
   z-index: 1200 !important;
 }
+

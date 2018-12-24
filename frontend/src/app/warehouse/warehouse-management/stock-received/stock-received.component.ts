@@ -3,11 +3,13 @@ import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Bus} from '../../../bus/bus.dto';
 import {VoucherItem} from '../../warehhouse.dto';
+import {BusService} from '../../../bus/bus.service';
 
 @Component({
   selector: 'app-stock-received',
   templateUrl: './stock-received.component.html',
-  styleUrls: ['./stock-received.component.scss']
+  styleUrls: ['./stock-received.component.scss'],
+  providers: [BusService]
 })
 export class StockReceivedComponent implements OnInit, AfterViewInit {
 
@@ -30,7 +32,8 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private busService: BusService
   ) { }
 
   ngOnInit() {
@@ -51,7 +54,9 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   }
 
   retrieveData() {
-
+    this.busService.getBusesList().subscribe( res => {
+      this.buses = res.content;
+    });
   }
 
   ngAfterViewInit() {

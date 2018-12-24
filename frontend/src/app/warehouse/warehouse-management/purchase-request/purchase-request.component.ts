@@ -68,7 +68,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
     });
 
     this.itemForm = this.fb.group({
-      spareTypeName: ['', Validators.required],
+      spareType: ['', Validators.required],
       refCode: ['', Validators.required],
       quantity: ['', Validators.required],
       make: ['', Validators.required],
@@ -83,7 +83,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
       supplierName: ['', Validators.required]
     });
 
-    this.filteredCodes = this.itemForm.get('spareTypeName').valueChanges
+    this.filteredCodes = this.itemForm.get('spareType').valueChanges
       .pipe(
         startWith(''),
         map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
@@ -108,8 +108,13 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
 
   addItem() {
     const voucherItem: VoucherItem = this.itemForm.value;
-    voucherItem.spareType = this.spareTypes.filter(
-      st => st.name === this.itemForm.controls['spareTypeName'].value)[0];
+    if (this.itemForm.controls['spareType'].value.name) {
+      voucherItem.spareType = this.itemForm.controls['spareType'].value;
+    } else {
+      voucherItem.spareType = new SpareType();
+      voucherItem.spareType.name = this.itemForm.controls['spareType'].value;
+      voucherItem.spareType.id = -1;
+    }
     this.voucherItems.push(voucherItem);
     this.itemForm.reset();
   }
@@ -127,5 +132,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
     this.selectedItem = this.selectedItem === item ? null : item;
   }
 
-
+  displayFn(spareType?: SpareType): string | undefined {
+    return spareType ? spareType.name : undefined;
+  }
 }

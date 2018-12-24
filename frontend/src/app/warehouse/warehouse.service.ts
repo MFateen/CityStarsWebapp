@@ -26,7 +26,7 @@ export class WarehouseService {
   }
 
   addStockIssue(stockIssue: StockIssue) {
-    return this.http.post(`${environment.apiUrl}/vouchers/stockissue/create`, stockIssue)
+    return this.http.post(`${environment.apiUrl}/vouchers/stockissue/create`, stockIssue);
   }
 
 }
