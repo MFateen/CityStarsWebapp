@@ -61,7 +61,7 @@ public class SpareService {
                 }
                 else {
                     StockReceived sr = (StockReceived) voucherItem.getVoucher();
-                    String spareDefaultName = voucherItem.getSpareType().getName()+sr.getDate();
+                    String spareDefaultName = voucherItem.getSpareType().getName();
                     Spare spare = new Spare(spareDefaultName, voucherItem.getSpareType(), sr);
                     spareRepository.save(spare);
                     spares.add(spare);
