@@ -1,7 +1,5 @@
 package com.citystartravel.backend.entity.bus.event;
 
-import com.citystartravel.backend.entity.bus.event.BusEvent;
-import com.citystartravel.backend.entity.bus.event.BusEventService;
 import com.citystartravel.backend.payload.response.ApiResponse;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
@@ -14,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/buses/events")
+@RequestMapping("/api/bus/event")
 class BusEventController {
 
     @Autowired
@@ -24,10 +24,19 @@ class BusEventController {
     private static final Logger logger = LoggerFactory.getLogger(BusEventController.class);
 
     @GetMapping("/getAll")
-    public PagedResponse<BusEvent> getBusEvents(@CurrentUser UserPrincipal currentUser,
+    public ResponseEntity<?> getBusEvents(@CurrentUser UserPrincipal currentUser,
                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
-        return busEventService.getAllBusEvents(currentUser, page, size);
+
+        try{
+            PagedResponse<BusEvent> pagedResponse = busEventService.getAllBusEvents(currentUser, page, size);
+            return new ResponseEntity<>(pagedResponse,HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>(
+                    new ApiResponse(false,"Unable to getAll bus events."),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/get")
@@ -36,25 +45,29 @@ class BusEventController {
         return busEventService.getBusEventById(id, currentUser);
     }
 
-    @GetMapping("/getByBus")
-    public BusEvent getBusEventByBus(@CurrentUser UserPrincipal currentUser,
-                                @RequestParam(value = "id") Long id) {
-        return busEventService.getBusEventById(id, currentUser);
+    @GetMapping("/getEventsForBus")
+    public List<BusEvent> getBusEventsForBus(@CurrentUser UserPrincipal currentUser,
+                                            @RequestParam(value = "id") Long id) {
+        return busEventService.getEventsForBus(id);
     }
 
-/*    @PostMapping("/create")
-    public ResponseEntity<?> createBusEvent(@CurrentUser UserPrincipal currentUser,
+    @PostMapping("/add")
+    public ResponseEntity<?> addBusEvent(@CurrentUser UserPrincipal currentUser,
                                        @RequestBody BusEventRequest busEventRequest) {
         try{
-            BusEvent busEvent = busEventService.createBusEvent(busEventRequest, currentUser);
-            return ResponseEntity.ok(busEvent);
+
+            if(busEventService.addBusEvent(busEventRequest, currentUser))
+                return new ResponseEntity<>(
+                        new ApiResponse(true,"Bus Event created successfully."),HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(
+                    new ApiResponse(false,"Unable to create bus event."),HttpStatus.BAD_REQUEST);
         }
         catch (Exception ex) {
             logger.error(ex.getMessage());
             return new ResponseEntity<>(
-                    new ApiResponse(false,"Unable to create busEvent."),HttpStatus.BAD_REQUEST);
+                    new ApiResponse(false,"Unable to create bus event."),HttpStatus.BAD_REQUEST);
         }
 
-    }*/
+    }
 
 }

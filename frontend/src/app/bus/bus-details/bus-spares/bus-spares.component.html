@@ -1,0 +1,13 @@
+    <div class="col-md-12">
+      <ul class="cbp_tmtimeline">
+        <li *ngFor="let spare of spares">
+          <time class="cbp_tmtime" datetime="2017-11-04T03:45">
+            <span>{{ spare.createdAt | date:'shortTime' }}</span>
+            <span>{{ spare.createdAt | date }}</span>
+          </time>
+          
+          <div class="cbp_tmlabel"> <span>{{spare.name}}</span> </div>
+        </li>
+      </ul>
+    </div>
+

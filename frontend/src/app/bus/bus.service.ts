@@ -22,7 +22,12 @@ export class BusService {
 
   getBusEvents(id: number) {
     const params = new HttpParams().set('id', id.toString());
-    return this.http.get<BusEvent[]>(`${environment.apiUrl}/bus/events`, { headers: new HttpHeaders(), params: params });
+    return this.http.get<BusEvent[]>(`${environment.apiUrl}/bus/event/getEventsForBus`, { headers: new HttpHeaders(), params: params });
+  }
+
+  getBusSpares(id: number) {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<BusEvent[]>(`${environment.apiUrl}/bus/spare/getSparesForBus`, { headers: new HttpHeaders(), params: params });
   }
 
   createBus(bus: Bus) {

@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AppMaterialModule} from './app-material/app-material.module';
 import { PurchaseRequestComponent } from './warehouse/warehouse-management/purchase-request/purchase-request.component';
 import { StockReceivedComponent } from './warehouse/warehouse-management/stock-received/stock-received.component';
+import { BusSparesComponent } from './bus/bus-details/bus-spares/bus-spares.component';
 
 registerLocaleData(localeArEg);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeArEg);
     BusesListComponent,
     WarehouseManagementComponent,
     PurchaseRequestComponent,
-    StockReceivedComponent
+    StockReceivedComponent,
+    BusSparesComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ package com.citystartravel.backend.entity.bus;
 
 import com.citystartravel.backend.entity.bus.event.BusEvent;
 import com.citystartravel.backend.entity.bus.event.BusEventRequest;
+import com.citystartravel.backend.entity.spare.Spare;
 import com.citystartravel.backend.payload.response.ApiResponse;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
@@ -80,36 +81,10 @@ public class BusController {
 
     }
 
-
-    // ------------------------ EVENTS ------------------------
-    @GetMapping("/events")
-    public List<BusEvent> getEvents(@CurrentUser UserPrincipal currentUser,
-                                   @RequestParam(value = "id") Long id) {
-        return busService.getBusEvents(id);
-    }
-
-    /*@PostMapping("/addEvents")
-    public ResponseEntity<?> addEvents(@CurrentUser UserPrincipal currentUser,
-                                   @RequestParam(value = "id") Long id,
-                                   @RequestBody List<BusEventRequest> busEvents) {
-
-        Bus bus = busService.getBusById(id, currentUser);
-        BusEvent busEvent = new BusEvent()
-        try{
-            for(BusEventRequest event : busEvents) {
-                bus.addBusEvent(event);
-            }
-            return ResponseEntity.ok(bus.getEvents());
-        }
-        catch (Exception ex) {
-            logger.error(ex.getMessage());
-            return new ResponseEntity<>(
-                    new ApiResponse(false,"Unable to add events to bus "+bus.getName()),HttpStatus.BAD_REQUEST);
-        }
-    }*/
-
-    @GetMapping("/open/open")
-    public int open() {
-        return 19;
+    // ---------------------------- spare ----------------------------
+    @GetMapping("/spare/getSparesForBus")
+    public List<Spare> getBusSpares(@CurrentUser UserPrincipal currentUser,
+                                          @RequestParam(value = "id") Long id) {
+        return busService.getBusSpares(id, currentUser);
     }
 }

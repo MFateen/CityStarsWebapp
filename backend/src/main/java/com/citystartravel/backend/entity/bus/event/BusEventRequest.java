@@ -2,7 +2,7 @@ package com.citystartravel.backend.entity.bus.event;
 
 public class BusEventRequest {
 
-    private long id;
+    private long busId;
 
     private String text;
 
@@ -15,12 +15,12 @@ public class BusEventRequest {
     public BusEventRequest() {
     }
 
-    public long getId() {
-        return id;
+    public long getBusId() {
+        return busId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBusId(long busId) {
+        this.busId = busId;
     }
 
     public String getText() {

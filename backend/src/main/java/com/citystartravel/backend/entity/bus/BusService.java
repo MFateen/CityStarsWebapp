@@ -4,6 +4,8 @@ package com.citystartravel.backend.entity.bus;
 import com.citystartravel.backend.entity.bus.event.BusEvent;
 import com.citystartravel.backend.entity.bus.event.BusEventService;
 import com.citystartravel.backend.entity.bus.event.BusEventType;
+import com.citystartravel.backend.entity.spare.Spare;
+import com.citystartravel.backend.entity.spare.SpareService;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
@@ -28,6 +30,9 @@ public class BusService {
 
     @Autowired
     private BusEventService busEventService;
+
+    @Autowired
+    private SpareService spareService;
 
     @Autowired
     private Mapper<Bus, BusResponse> mapper;
@@ -58,8 +63,14 @@ public class BusService {
         return busResponse;
     }
 
+    // ---------------------------------- events ----------------------------------
     public List<BusEvent> getBusEvents(Long id) {
         return busEventService.getEventsForBus(id);
+    }
+
+    // ---------------------------------- spares ----------------------------------
+    public List<Spare> getBusSpares(Long id, @CurrentUser UserPrincipal currentUser) {
+        return spareService.getSparesForBus(id, currentUser);
     }
 
     // ---------------------------------- Entity CRUD ----------------------------------

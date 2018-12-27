@@ -14,7 +14,7 @@ public interface BusEventRepository extends JpaRepository<BusEvent, Long> {
 
     List<BusEvent> findByIdIn(List<Long> busEventId, Sort sort);
 
-    List<BusEvent> findByBusId(Long busId);
+    List<BusEvent> findByBusId(Long busId, Sort sort);
 
     @Override
     BusEvent getOne(Long aLong);

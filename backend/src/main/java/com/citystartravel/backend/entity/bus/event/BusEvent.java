@@ -40,6 +40,13 @@ public class BusEvent extends UserDateAudit {
         this.text = text;
     }
 
+    public BusEvent(Bus bus, @NotNull String text, String busCondition, @NotNull BusEventType type) {
+        this.bus = bus;
+        this.text = text;
+        this.busCondition = busCondition;
+        this.type = type;
+    }
+
     public BusEvent(Bus bus, @NotBlank String text) {
         this.bus = bus;
         this.text = text;

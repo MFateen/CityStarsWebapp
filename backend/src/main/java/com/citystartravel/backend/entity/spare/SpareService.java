@@ -15,6 +15,7 @@ import com.citystartravel.backend.util.UtilityMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class SpareService {
 
     public Spare getSpareById(Long spareId, @CurrentUser UserPrincipal currentUser) {
         return utilityMethods.getById(spareRepository, currentUser, spareId,"Spare");
+    }
+
+    public List<Spare> getSparesForBus(Long busId, @CurrentUser UserPrincipal currentUser) {
+        return spareRepository.findAllByBusId(busId, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     // --------------------------- Stock Received ---------------------------

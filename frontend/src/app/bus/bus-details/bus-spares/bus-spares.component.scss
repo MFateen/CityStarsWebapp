@@ -1,0 +1,200 @@
+$color_1: #444;
+$color_2: #666;
+$color_3: #777;
+$color_4: #3d4c5a;
+$color_5: #fff;
+$background_color_1: #50d38a;
+$background_color_2: #ff758e;
+$background_color_3: #ffc323;
+$background_color_4: #2CA8FF;
+$border_right_color_1: transparent;
+$border_bottom_color_1: #f5f5f6;
+$border_left_color_1: #f0f1f3;
+$border_left_color_2: transparent;
+
+.cbp_tmtimeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #eee;
+    right: 20%;
+    margin-right: -6px;
+  }
+  >li {
+    position: relative;
+    //&:first-child {
+    //  .cbp_tmtime {
+    //    span.large {
+    //      color: $color_1;
+    //      font-size: 17px !important;
+    //      font-weight: 700;
+    //    }
+    //  }
+    //  .cbp_tmicon {
+    //    background: #fff;
+    //    color: $color_2;
+    //  }
+    //}
+    &:nth-child(odd) {
+      .cbp_tmtime {
+        span {
+          &:last-child {
+            color: $color_1;
+            font-size: 13px;
+          }
+        }
+      }
+      .cbp_tmlabel {
+        background: #f0f1f3;
+        &:after {
+          border-left-color: $border_left_color_1;
+        }
+      }
+    }
+    .empty {
+      span {
+        color: $color_3;
+      }
+    }
+    .cbp_tmtime {
+      display: block;
+      width: 23%;
+      padding-left: 70px;
+      position: absolute;
+      span {
+        display: block;
+        text-align: left;
+        &:first-child {
+          font-size: 15px;
+          color: $color_4;
+          font-weight: 700;
+        }
+        &:last-child {
+          font-size: 14px;
+          color: $color_1;
+        }
+      }
+    }
+    .cbp_tmlabel {
+      margin: 0 25% 15px 0;
+      background: #f0f1f3;
+      padding: 1.2em;
+      position: relative;
+      border-radius: 5px;
+      &:after {
+        left: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        top: 10px;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid #f0f1f3;
+      }
+    }
+    .cbp_tmicon {
+      width: 40px;
+      font-size: 1.4em;
+      line-height: 40px;
+      position: absolute;
+      color: $color_5;
+      background: #46a4da;
+      border-radius: 50%;
+      box-shadow: 0 5px 0 0 #f5f5f6;
+      text-align: center;
+      right: 20%;
+      margin: 0 -25px 0 0;
+    }
+  }
+}
+.bg-green {
+  background-color: $background_color_1 !important;
+  color: $color_5;
+}
+.bg-blush {
+  background-color: $background_color_2 !important;
+  color: $color_5;
+}
+.bg-orange {
+  background-color: $background_color_3 !important;
+  color: $color_5;
+}
+.bg-info {
+  background-color: $background_color_4 !important;
+}
+@media screen and (max-width: 992px) and (min-width: 768px) {
+  .cbp_tmtimeline {
+    >li {
+      .cbp_tmtime {
+        padding-left: 60px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 65.375em) {
+  .cbp_tmtimeline {
+    >li {
+      .cbp_tmtime {
+        span {
+          &:last-child {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 47.2em) {
+  .cbp_tmtimeline {
+    &:before {
+      display: none;
+    }
+    >li {
+      .cbp_tmtime {
+        width: 100%;
+        position: relative;
+        padding: 0 0 20px 0;
+        span {
+          text-align: left;
+        }
+      }
+      .cbp_tmlabel {
+        margin: 0 0 30px 0;
+        padding: 1em;
+        font-weight: 400;
+        font-size: 95%;
+        &:after {
+          left: auto;
+          right: 20px;
+          border-right-color: $border_right_color_1;
+          border-bottom-color: $border_bottom_color_1;
+          top: -20px;
+        }
+      }
+      .cbp_tmicon {
+        position: relative;
+        float: left;
+        right: auto;
+        margin: -64px 0 0 5px;
+      }
+      &:nth-child(odd) {
+        .cbp_tmlabel {
+          &:after {
+            border-left-color: $border_left_color_2;
+            border-bottom-color: $border_bottom_color_1;
+          }
+        }
+      }
+    }
+  }
+}
