@@ -28,6 +28,7 @@ import {AppMaterialModule} from './app-material/app-material.module';
 import { PurchaseRequestComponent } from './warehouse/warehouse-management/purchase-request/purchase-request.component';
 import { StockReceivedComponent } from './warehouse/warehouse-management/stock-received/stock-received.component';
 import { BusSparesComponent } from './bus/bus-details/bus-spares/bus-spares.component';
+import { StockIssueComponent } from './warehouse/warehouse-management/stock-issue/stock-issue.component';
 
 registerLocaleData(localeArEg);
 
@@ -45,8 +46,9 @@ registerLocaleData(localeArEg);
     BusesListComponent,
     WarehouseManagementComponent,
     PurchaseRequestComponent,
+    BusSparesComponent,
     StockReceivedComponent,
-    BusSparesComponent
+    StockIssueComponent
   ],
   imports: [
     BrowserModule,

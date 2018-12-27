@@ -10,6 +10,11 @@
       <button
         class="mt-3 btn btn-secondary btn-sm float-left mx-1"
         (click)="onStockReceivedClick()">
+        إذن إضافة جديد
+      </button>
+      <button
+        class="mt-3 btn btn-secondary btn-sm float-left mx-1"
+        (click)="onStockIssueClick()">
         إذن صرف جديد
       </button>
     </div>
@@ -61,4 +66,5 @@
 </app-layout>
 
 <app-purchase-request [showModal]="showPurchase"></app-purchase-request>
-<app-stock-received [showModal]="showStock"></app-stock-received>
+<app-stock-received [showModal]="showStockReceived"></app-stock-received>
+<app-stock-issue [showModal]="showStockIssue"></app-stock-issue>

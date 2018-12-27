@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ModalDirective} from 'ngx-bootstrap';
+import {Component, OnInit} from '@angular/core';
 import {WarehouseService} from '../warehouse.service';
 import {Spare, SpareType} from '../warehhouse.dto';
 
@@ -14,7 +13,8 @@ export class WarehouseManagementComponent implements OnInit {
   spareTypes: SpareType[] = [];
   spares: Spare[] = [];
   showPurchase: boolean;
-  showStock: boolean;
+  showStockReceived: boolean;
+  showStockIssue: boolean;
 
   constructor(
     private warehouseService: WarehouseService
@@ -22,7 +22,8 @@ export class WarehouseManagementComponent implements OnInit {
 
   ngOnInit() {
     this.showPurchase = false;
-    this.showStock = false;
+    this.showStockReceived = false;
+    this.showStockIssue = false;
     this.warehouseService.getSpareTypesList().subscribe(
       res => {
         this.spareTypes = res.content;
@@ -41,7 +42,11 @@ export class WarehouseManagementComponent implements OnInit {
   }
 
   onStockReceivedClick() {
-    this.showStock = !this.showStock;
+    this.showStockReceived = !this.showStockReceived;
+  }
+
+  onStockIssueClick() {
+    this.showStockIssue = !this.showStockIssue;
   }
 
 

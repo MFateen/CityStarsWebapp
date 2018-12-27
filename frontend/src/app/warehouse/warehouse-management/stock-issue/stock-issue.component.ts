@@ -1,17 +1,19 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Bus} from '../../../bus/bus.dto';
 import {VoucherItem} from '../../warehhouse.dto';
+import {Bus} from '../../../bus/bus.dto';
+import {BusService} from '../../../bus/bus.service';
 
 @Component({
-  selector: 'app-stock-received',
-  templateUrl: './stock-received.component.html',
-  styleUrls: ['./stock-received.component.scss'],
+  selector: 'app-stock-issue',
+  templateUrl: './stock-issue.component.html',
+  styleUrls: ['./stock-issue.component.scss'],
+  providers: [BusService]
 })
-export class StockReceivedComponent implements OnInit, AfterViewInit {
+export class StockIssueComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('newStockReceivedModal') newStockReceivedModal: ModalDirective;
+  @ViewChild('newStockIssueModal') newStockIssueModal: ModalDirective;
 
   stockForm: FormGroup;
   itemForm: FormGroup;
@@ -26,11 +28,12 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   @Input()
   set showModal(show: boolean) {
     if (!this.isViewInit) { return; }
-    this.showStockReceivedModal();
+    this.showStockIssueModal();
   }
 
   constructor(
     private fb: FormBuilder,
+    private busService: BusService
   ) { }
 
   ngOnInit() {
@@ -50,18 +53,22 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
     this.retrieveData();
   }
 
-  retrieveData() {  }
+  retrieveData() {
+    this.busService.getBusesList().subscribe( res => {
+      this.buses = res.content;
+    });
+  }
 
   ngAfterViewInit() {
     this.isViewInit = true;
   }
 
-  showStockReceivedModal(): void {
-    this.newStockReceivedModal.show();
+  showStockIssueModal(): void {
+    this.newStockIssueModal.show();
   }
 
-  hideStockReceivedModal(): void {
-    this.newStockReceivedModal.hide();
+  hideStockIssueModal(): void {
+    this.newStockIssueModal.hide();
   }
 
   addItem() {
@@ -69,11 +76,10 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
     this.itemForm.reset();
   }
 
-  addStockReceived() {
+  addStockIssue() {
   }
 
   selectItem(item) {
     this.selectedItem = this.selectedItem === item ? null : item;
   }
-
 }

@@ -1,0 +1,23 @@
+@import "../../../../assets/variables";
+
+.clickable {
+  cursor: pointer;
+}
+
+.table-hover > tbody > tr.form-table-row:hover > td,
+.form-table-row > td {
+  background-color: #fff;
+}
+
+.add-item {
+  position: relative;
+  float: left;
+  top: 2.3rem;
+  left: 1rem;
+  color: white;
+  z-index: 1;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}

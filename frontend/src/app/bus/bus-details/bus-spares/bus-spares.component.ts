@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Spare, SpareType} from '../../warehouse/warehouse.dto';
+import {Spare} from '../../../warehouse/warehhouse.dto';
 import {BusService} from '../../bus.service';
 import {ActivatedRoute} from '@angular/router';
 
