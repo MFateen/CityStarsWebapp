@@ -25,8 +25,6 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    console.log(localStorage.getItem('currentUser'));
     localStorage.removeItem('currentUser');
-    console.log(localStorage.getItem('currentUser'));
   }
 }

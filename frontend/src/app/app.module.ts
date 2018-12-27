@@ -12,7 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import {AuthGuard} from './shared/guards';
 import {AlertService, AuthenticationService, UserService} from './shared/services';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from './shared/helpers';
+import {ErrorInterceptor, JwtInterceptor} from './shared/helpers';
 import {ReactiveFormsModule} from '@angular/forms';
 import { BusDetailsComponent } from './bus/bus-details/bus-details.component';
 import {NgxGaugeModule} from 'ngx-gauge';
@@ -69,9 +69,7 @@ registerLocaleData(localeArEg);
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: 'ar-eg' },
-    // provider used to create fake backend
-    fakeBackendProvider
+    { provide: LOCALE_ID, useValue: 'ar-eg' }
   ],
   bootstrap: [AppComponent]
 })

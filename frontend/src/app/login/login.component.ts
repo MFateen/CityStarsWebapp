@@ -12,7 +12,6 @@ import {first} from 'rxjs/operators';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  loading = false;
   submitted = false;
   returnUrl: string;
   wrongCredentials = false;
@@ -56,13 +55,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
-          console.log('subscribe');
-          console.log(data);
           this.router.navigate([this.returnUrl]);
         },
         error => {
@@ -70,7 +66,6 @@ export class LoginComponent implements OnInit {
           this.loginForm.controls['password'].reset();
           console.log(error);
           this.alertService.error('خطأ في اسم المستخدم أو كلمة السر');
-          this.loading = false;
         });
   }
 }
