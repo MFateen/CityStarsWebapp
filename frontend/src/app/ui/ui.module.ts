@@ -33,7 +33,8 @@ library.add(fas, far);
   declarations: [LayoutComponent, HeaderComponent, FooterComponent, AlertComponent],
   exports: [
     LayoutComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AlertComponent
   ]
 })
 export class UiModule { }

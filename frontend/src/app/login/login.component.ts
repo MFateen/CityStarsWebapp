@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  wrongCredentials = false;
 
   usernamePlaceholder = 'إسم المستخدم';
   passwordPlaceholder = 'كلمة المرور';
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       if (this.f.username.errors) { this.usernamePlaceholder = 'من فضلك أدخل إسم المستخدم'; }
       if (this.f.password.errors) { this.passwordPlaceholder = 'من فضلك أدخل كلمة المرور';  }
+      this.loginForm.reset();
       return;
     }
 
@@ -59,10 +61,15 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          console.log('subscribe');
+          console.log(data);
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.alertService.error(error);
+          this.wrongCredentials = true;
+          this.loginForm.controls['password'].reset();
+          console.log(error);
+          this.alertService.error('خطأ في اسم المستخدم أو كلمة السر');
           this.loading = false;
         });
   }
