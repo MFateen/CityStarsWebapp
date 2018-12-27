@@ -29,6 +29,7 @@ import { PurchaseRequestComponent } from './warehouse/warehouse-management/purch
 import { StockReceivedComponent } from './warehouse/warehouse-management/stock-received/stock-received.component';
 import { BusSparesComponent } from './bus/bus-details/bus-spares/bus-spares.component';
 import { StockIssueComponent } from './warehouse/warehouse-management/stock-issue/stock-issue.component';
+import { NewBusEventComponent } from './bus/bus-details/new-bus-event/new-bus-event.component';
 
 registerLocaleData(localeArEg);
 
@@ -48,7 +49,8 @@ registerLocaleData(localeArEg);
     PurchaseRequestComponent,
     BusSparesComponent,
     StockReceivedComponent,
-    StockIssueComponent
+    StockIssueComponent,
+    NewBusEventComponent
   ],
   imports: [
     BrowserModule,

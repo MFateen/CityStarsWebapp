@@ -26,4 +26,6 @@ export class BusEvent {
   createdAt: Date;
   text: string;
   type: BusEventType;
+  busId: number;
+  busCondition: number;
 }

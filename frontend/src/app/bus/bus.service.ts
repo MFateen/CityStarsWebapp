@@ -26,6 +26,10 @@ export class BusService {
     return this.http.get<BusEvent[]>(`${environment.apiUrl}/bus/event/getEventsForBus`, { headers: new HttpHeaders(), params: params });
   }
 
+  addBusEvents(busEvent: BusEvent) {
+    return this.http.post(`${environment.apiUrl}/bus/event/add`, busEvent);
+  }
+
   getBusSpares(id: number) {
     const params = new HttpParams().set('id', id.toString());
     return this.http.get<Spare[]>(`${environment.apiUrl}/bus/spare/getSparesForBus`, { headers: new HttpHeaders(), params: params });

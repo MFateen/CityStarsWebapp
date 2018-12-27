@@ -1,0 +1,35 @@
+<div bsModal #newBusEvent="bs-modal" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">ملاحظة جديدة</h4>
+        <div class="col m-0 p-0">
+          <button type="button" class="float-left close" (click)="hideBusEventModal()">
+            <fa-icon icon="times"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="busEvent" (submit)="addBusEvent()">
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="text" placeholder="الملاحظة">
+          </mat-form-field>
+          <!--<mat-form-field class="col-md-6">-->
+            <!--<input matInput value="{{bus.name}}" disabled>-->
+          <!--</mat-form-field>-->
+
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="busCondition" placeholder="حالة الأتوبيس">
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <input matInput formControlName="busEventType" placeholder="نوع الملاحظة">
+          </mat-form-field>
+
+          <button type="submit" class="btn btn-secondary btn-sm float-left mt-3">
+          اضف ملاحظة جديدة
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

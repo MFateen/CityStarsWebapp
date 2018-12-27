@@ -14,20 +14,27 @@ export class BusDetailsComponent implements OnInit {
   busID: number;
   bus: Bus;
 
+  showNewBusEvent: boolean;
+
   constructor(
     private busService: BusService,
-    route: ActivatedRoute
+    private route: ActivatedRoute
   ) {
-    this.busID = route.snapshot.params['id'];
   }
 
   ngOnInit() {
+    this.showNewBusEvent = false;
+    this.busID = this.route.snapshot.params['id'];
+
     this.busService.getBus(this.busID).subscribe(
       bus => {
         this.bus = bus;
       }
     );
+  }
 
+  onNewBusEventClick() {
+    this.showNewBusEvent = !this.showNewBusEvent;
   }
 
 }
