@@ -31,18 +31,23 @@
           <table class="table table-hover col-md-12">
             <thead class="thead-dark">
             <tr class="d-flex">
-              <th class="col-md-3" scope="col">كود الصنف</th>
+              <th scope="col">النوع</th>
               <th class="col-md-4" scope="col">وصف الصنف</th>
               <th class="col-md-3" scope="col">الوحدة</th>
               <th class="col-md-2" scope="col">الكمية</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="form-table-row" [ngClass]="{
-                    'd-none': !showItemForm,
-                    'd-flex': showItemForm
-              }">
-              <td class="col-md-3"><input matInput formControlName="itemCode" placeholder="كود الصنف"></td>
+            <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm, 'd-flex': showItemForm}">
+              <td>
+                <input matInput formControlName="spareType" placeholder="النوع" [matAutocomplete]="auto">
+
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let st of filteredCodes | async" [value]="st">
+                    <span>{{st.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </td>
               <td class="col-md-4"><input matInput formControlName="description" placeholder="وصف الصنف"></td>
               <td class="col-md-3"><input matInput formControlName="unit" placeholder="الوحدة"></td>
               <td class="col-md-2"><input matInput formControlName="quantity" placeholder="الكمية"></td>

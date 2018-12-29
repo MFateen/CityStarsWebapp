@@ -1,9 +1,12 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {VoucherItem} from '../../warehhouse.dto';
+import {SpareType, VoucherItem} from '../../warehhouse.dto';
 import {Bus} from '../../../bus/bus.dto';
 import {BusService} from '../../../bus/bus.service';
+import {WarehouseService} from '../../warehouse.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock-issue',
@@ -21,6 +24,9 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
   stockItems: VoucherItem[] = [];
   selectedItem: VoucherItem;
 
+  filteredCodes: Observable<SpareType[]>;
+  spareTypes: SpareType[] = [];
+
   buses: Bus[];
 
   showItemForm = false;
@@ -33,17 +39,22 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private busService: BusService
+    private busService: BusService,
+    private warehouseService: WarehouseService
   ) { }
 
   ngOnInit() {
+    this.warehouseService.getSpareTypesList().subscribe(res => {
+      this.spareTypes = res.content;
+    });
+
     this.stockForm = this.fb.group({
       date: ['', Validators.required],
       bus: ['', Validators.required],
     });
 
     this.itemForm = this.fb.group({
-      itemCode: ['', Validators.required],
+      spareType: ['', Validators.required],
       description: ['', Validators.required],
       unit: ['', Validators.required],
       quantity: ['', Validators.required],
@@ -51,6 +62,16 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
     });
 
     this.retrieveData();
+
+    this.filteredCodes = this.itemForm.get('spareType').valueChanges
+      .pipe(
+        startWith(''),
+        map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
+      );
+  }
+
+  private _filterSpareTypes(spareType): SpareType[] {
+    return this.spareTypes.filter(st => st.name.indexOf(spareType) === 0);
   }
 
   retrieveData() {
@@ -81,5 +102,9 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
 
   selectItem(item) {
     this.selectedItem = this.selectedItem === item ? null : item;
+  }
+
+  displayFn(spareType?: SpareType): string | undefined {
+    return spareType ? spareType.name : undefined;
   }
 }

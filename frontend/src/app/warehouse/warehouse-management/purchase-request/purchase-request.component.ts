@@ -64,7 +64,6 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.warehouseService.getSpareTypesList().subscribe(res => {
       this.spareTypes = res.content;
-      console.log(this.spareTypes);
     });
 
     this.itemForm = this.fb.group({
