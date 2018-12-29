@@ -18,7 +18,7 @@ public class SpareTypeController {
 
     private static final Logger logger = LoggerFactory.getLogger(SpareTypeController.class);
 
-    @GetMapping("/getAll")
+    @GetMapping(value = "/getAll")
     public PagedResponse<SpareType> getSpareTypees(@CurrentUser UserPrincipal currentUser,
                                                    @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                    @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {

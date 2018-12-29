@@ -31,6 +31,15 @@ export class PurchaseRequest {
   voucherItemRequests: VoucherItem[];
 }
 
+export class StockReceived {
+  date: Date;
+  needsRequest: string;
+  supplierCode: string;
+  supplierName: string;
+  purchaseOrder: number;
+  voucherItemRequests: VoucherItem[];
+}
+
 export class StockIssue {
   busID: number;
   date: Date;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Response} from '../shared/models';
-import {PurchaseRequest, Spare, SpareType, StockIssue} from './warehhouse.dto';
+import {PurchaseRequest, Spare, SpareType, StockIssue, StockReceived} from './warehhouse.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,17 @@ export class WarehouseService {
     return this.http.get<Response<Spare>>(`${environment.apiUrl}/spare/getAll`);
   }
 
+  
+  getPurchaseRequests() {
+	return this.http.get<Response<PurchaseRequest>>(`${environment.apiUrl}/vouchers/purchaserequest/getAll`);
+  }
+  
   addPurchaseRequest(purchaseRequest: PurchaseRequest) {
     return this.http.post(`${environment.apiUrl}/vouchers/purchaserequest/create`, purchaseRequest);
+  }
+  
+  addStockReceived(stockReceived: StockReceived) {
+    return this.http.post(`${environment.apiUrl}/vouchers/stockreceived/create`, stockReceived);
   }
 
   addStockIssue(stockIssue: StockIssue) {

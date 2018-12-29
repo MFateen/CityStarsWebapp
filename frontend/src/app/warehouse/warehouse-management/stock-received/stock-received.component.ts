@@ -1,13 +1,17 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Bus} from '../../../bus/bus.dto';
-import {VoucherItem} from '../../warehhouse.dto';
+import {map, startWith} from 'rxjs/operators'
+import {Observable} from 'rxjs';
+import {PurchaseRequest, StockReceived, SpareType, VoucherItem} from '../../warehhouse.dto';
+import {WarehouseService} from '../../warehouse.service';
+import {AlertService} from '../../../shared/services';
 
 @Component({
   selector: 'app-stock-received',
   templateUrl: './stock-received.component.html',
   styleUrls: ['./stock-received.component.scss'],
+  providers: [WarehouseService, AlertService]
 })
 export class StockReceivedComponent implements OnInit, AfterViewInit {
 
@@ -16,13 +20,17 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   stockForm: FormGroup;
   itemForm: FormGroup;
 
-  stockItems: VoucherItem[] = [];
+  voucherItems: VoucherItem[] = [];
   selectedItem: VoucherItem;
 
-  buses: Bus[];
+  purchaseRequests: PurchaseRequest[] = [];
 
-  showItemForm = false;
+  filteredCodes: Observable<SpareType[]>;
+  spareTypes: SpareType[] = [];
+
   isViewInit = false;
+  showItemForm = false;
+
   @Input()
   set showModal(show: boolean) {
     if (!this.isViewInit) { return; }
@@ -31,26 +39,47 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
+    private warehouseService: WarehouseService,
+    private alert: AlertService
   ) { }
 
   ngOnInit() {
-    this.stockForm = this.fb.group({
-      date: ['', Validators.required],
-      bus: ['', Validators.required],
+    this.warehouseService.getSpareTypesList().subscribe(res => {
+      this.spareTypes = res.content;
+    });
+
+    this.warehouseService.getPurchaseRequests().subscribe(res => {
+      this.purchaseRequests = res.content;
     });
 
     this.itemForm = this.fb.group({
-      itemCode: ['', Validators.required],
-      description: ['', Validators.required],
-      unit: ['', Validators.required],
+      spareType: ['', Validators.required],
+      refCode: ['', Validators.required],
       quantity: ['', Validators.required],
-      notes: ['', Validators.required]
+      make: ['', Validators.required],
+      unit: ['', Validators.required],
+      description: ['', Validators.required]
     });
 
-    this.retrieveData();
+    this.stockForm = this.fb.group({
+      date: ['', Validators.required],
+      purchaseRequests: ['', Validators.required],
+    });
+	
+	this.filteredCodes = this.itemForm.get('spareType').valueChanges
+      .pipe(
+        startWith(''),
+        map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
+      );
   }
-
-  retrieveData() {  }
+  
+  private _filterSpareTypes(spareType): SpareType[] {
+    return this.spareTypes.filter(st => st.name.indexOf(spareType) === 0);
+  }
+  
+  private _filterPurchaseRequests(purchaseRequests): PurchaseRequest[] {
+    return this.purchaseRequests.filter(pr => pr.id.indexOf(purchaseRequests) === 0);
+  }
 
   ngAfterViewInit() {
     this.isViewInit = true;
@@ -65,15 +94,33 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
   }
 
   addItem() {
-    this.stockItems.push(this.itemForm.value);
+    const voucherItem: VoucherItem = this.itemForm.value;
+    if (this.itemForm.controls['spareType'].value.name) {
+      voucherItem.spareType = this.itemForm.controls['spareType'].value;
+    } else {
+      voucherItem.spareType = new SpareType();
+      voucherItem.spareType.name = this.itemForm.controls['spareType'].value;
+      voucherItem.spareType.id = -1;
+    }
+    this.voucherItems.push(voucherItem);
     this.itemForm.reset();
   }
 
   addStockReceived() {
+	const stockReceived: StockReceived = this.stockForm.value;
+
+    stockReceived.voucherItemRequests = this.voucherItems;
+	stockReceived.purchaseOrder = this.stockForm.controls['purchaseRequests'].value;
+    this.warehouseService.addStockReceived(stockReceived).subscribe(res => {
+      this.alert.success('تمت الإضافة بنجاح');
+    });
   }
 
   selectItem(item) {
     this.selectedItem = this.selectedItem === item ? null : item;
   }
 
+  displayFn(spareType?: SpareType): string | undefined {
+    return spareType ? spareType.name : undefined;
+  }
 }

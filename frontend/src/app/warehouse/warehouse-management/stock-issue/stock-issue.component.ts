@@ -1,18 +1,21 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SpareType, VoucherItem} from '../../warehhouse.dto';
+import {map, startWith} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {PurchaseRequest, StockIssue, SpareType, VoucherItem} from '../../warehhouse.dto';
+import {WarehouseService} from '../../warehouse.service';
 import {Bus} from '../../../bus/bus.dto';
 import {BusService} from '../../../bus/bus.service';
-import {WarehouseService} from '../../warehouse.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {AlertService} from '../../../shared/services';
+
 
 @Component({
   selector: 'app-stock-issue',
   templateUrl: './stock-issue.component.html',
   styleUrls: ['./stock-issue.component.scss'],
-  providers: [BusService]
+  providers: [BusService],
+  providers: [WarehouseService, AlertService]
 })
 export class StockIssueComponent implements OnInit, AfterViewInit {
 
@@ -21,7 +24,7 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
   stockForm: FormGroup;
   itemForm: FormGroup;
 
-  stockItems: VoucherItem[] = [];
+  voucherItems: VoucherItem[] = [];
   selectedItem: VoucherItem;
 
   filteredCodes: Observable<SpareType[]>;
@@ -55,10 +58,11 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
 
     this.itemForm = this.fb.group({
       spareType: ['', Validators.required],
-      description: ['', Validators.required],
-      unit: ['', Validators.required],
+      refCode: ['', Validators.required],
       quantity: ['', Validators.required],
-      notes: ['', Validators.required]
+      make: ['', Validators.required],
+      unit: ['', Validators.required],
+      description: ['', Validators.required]
     });
 
     this.retrieveData();
@@ -93,11 +97,18 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
   }
 
   addItem() {
-    this.stockItems.push(this.itemForm.value);
+    this.voucherItems.push(this.itemForm.value);
     this.itemForm.reset();
   }
 
   addStockIssue() {
+	  const stockIssue: StockIssue = this.stockForm.value;
+	  stockIssue.voucherItemRequests = this.voucherItems;
+	  stockIssue.busID = this.stockForm.controls['bus'].value;
+	  console.log('bus'+stockIssue.busID+' - # of items:'+stockIssue.voucherItemRequests.length);
+	  this.warehouseService.addStockIssue(stockIssue).subscribe(res => {
+		this.alert.success('تمت الإضافة بنجاح');
+	  })
   }
 
   selectItem(item) {

@@ -2,6 +2,7 @@ package com.citystartravel.backend.entity.sparetype;
 
 import com.citystartravel.backend.config.audit.UserDateAudit;
 import com.citystartravel.backend.entity.spare.Spare;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -40,6 +41,7 @@ public class SpareType extends UserDateAudit {
     )
     @Fetch(FetchMode.SELECT)
     @JsonManagedReference
+    @JsonIgnore
     private List<Spare> spares = new ArrayList<>();
 
     public SpareType() {}

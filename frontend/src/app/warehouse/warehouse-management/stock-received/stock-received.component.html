@@ -16,58 +16,72 @@
             <mat-datepicker-toggle matSuffix [for]="dateField"></mat-datepicker-toggle>
             <mat-datepicker #dateField></mat-datepicker>
           </mat-form-field>
-
-          <mat-form-field class="col-md-6">
-            <mat-select formControlName="bus" placeholder="الأتوبيس">
-              <mat-option *ngFor="let bus of buses" [value]="bus.id">
-                {{bus.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+		  
+		  <mat-form-field class="col-md-6">
+				<mat-select formControlName="purchaseRequests" placeholder="رقم طلب الشراء">
+						<mat-option *ngFor="let pr of purchaseRequests" [value]="pr.id">
+						  {{pr.id}}
+						</mat-option>
+				</mat-select>
+			</mat-form-field>
+		   
+		  
+		  
         </form>
         <form [formGroup]="itemForm" (submit)="addItem()">
-          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle" (click)="showItemForm = true"></fa-icon>
-          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle" (click)="showItemForm = false"></fa-icon>
-          <table class="table table-hover col-md-12">
+          <fa-icon class="clickable add-item" *ngIf="!showItemForm" icon="plus-circle"
+                   (click)="showItemForm = true"></fa-icon>
+          <fa-icon class="clickable add-item" *ngIf="showItemForm" icon="times-circle"
+                   (click)="showItemForm = false"></fa-icon>
+          <table class="table table-hover">
             <thead class="thead-dark">
-            <tr class="d-flex">
-              <th class="col-md-3" scope="col">كود الصنف</th>
-              <th class="col-md-4" scope="col">وصف الصنف</th>
-              <th class="col-md-3" scope="col">الوحدة</th>
-              <th class="col-md-2" scope="col">الكمية</th>
+            <tr>
+              <th scope="col">النوع</th>
+              <th scope="col">كود المورد</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">الماركة</th>
+              <th scope="col">الوحدة</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="form-table-row" [ngClass]="{
-                    'd-none': !showItemForm,
-                    'd-flex': showItemForm
-              }">
-              <td class="col-md-3"><input matInput formControlName="itemCode" placeholder="كود الصنف"></td>
-              <td class="col-md-4"><input matInput formControlName="description" placeholder="وصف الصنف"></td>
-              <td class="col-md-3"><input matInput formControlName="unit" placeholder="الوحدة"></td>
-              <td class="col-md-2"><input matInput formControlName="quantity" placeholder="الكمية"></td>
+            <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
+              <td>
+                <input matInput formControlName="spareType" placeholder="النوع" [matAutocomplete]="auto">
+
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let st of filteredCodes | async" [value]="st">
+                    <span>{{st.name}}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </td>
+              <!-- <td><input matInput formControlName="spareType" placeholder="كود المورد"></td> -->
+              <td><input matInput formControlName="refCode" placeholder="كود المورد"></td>
+			  <td><input matInput formControlName="quantity" placeholder="الكمية"></td>
+              <td><input matInput formControlName="make" placeholder="الماركة"></td>
+              <td><input matInput formControlName="unit" placeholder="الوحدة"></td>
             </tr>
             <tr class="form-table-row" [ngClass]="{'d-none': !showItemForm }">
               <td colspan="5">
-                <textarea matInput formControlName="notes" placeholder="الملاحظات"></textarea>
+                <textarea matInput formControlName="description" placeholder="وصف الصنف"></textarea>
                 <button type="submit" class="btn btn-secondary btn-sm float-left mt-1 py-0">اضف صنف</button>
               </td>
             </tr>
 
-            <ng-container *ngFor="let item of stockItems">
+            <ng-container *ngFor="let item of voucherItems">
               <tr [ngClass]="{
                         'clickable ': item != selectedItem,
                         'form-table-row': item == selectedItem
-                  }" class="d-flex" (click)="selectItem(item)">
-                <td class="col-md-3">{{item.itemCode}}</td>
-                <td class="col-md-4">{{item.description}}</td>
-                <td class="col-md-3">{{item.unit}}</td>
-                <td class="col-md-2">{{item.quantity}}</td>
+                  }" (click)="selectItem(item)">
+                <td>{{item.spareType.name}}</td>
+                <td>{{item.spareType.name}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.make}}</td>
+                <td>{{item.unit}}</td>
               </tr>
               <tr [ngClass]="{
                         'collapse ': item != selectedItem,
                         'form-table-row': item == selectedItem
-                  }" >
+                  }">
                 <td colspan="5">
                   <div>وصف الصنف:</div>
                   <div>{{item.description}}</div>
