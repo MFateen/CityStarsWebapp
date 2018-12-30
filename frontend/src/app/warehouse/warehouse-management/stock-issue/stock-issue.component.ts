@@ -14,8 +14,7 @@ import {AlertService} from '../../../shared/services';
   selector: 'app-stock-issue',
   templateUrl: './stock-issue.component.html',
   styleUrls: ['./stock-issue.component.scss'],
-  providers: [BusService],
-  providers: [WarehouseService, AlertService]
+  providers: [BusService, WarehouseService, AlertService]
 })
 export class StockIssueComponent implements OnInit, AfterViewInit {
 
@@ -43,7 +42,8 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private busService: BusService,
-    private warehouseService: WarehouseService
+    private warehouseService: WarehouseService,
+    private alert: AlertService
   ) { }
 
   ngOnInit() {
@@ -105,10 +105,10 @@ export class StockIssueComponent implements OnInit, AfterViewInit {
 	  const stockIssue: StockIssue = this.stockForm.value;
 	  stockIssue.voucherItemRequests = this.voucherItems;
 	  stockIssue.busID = this.stockForm.controls['bus'].value;
-	  console.log('bus'+stockIssue.busID+' - # of items:'+stockIssue.voucherItemRequests.length);
+	  console.log('bus' + stockIssue.busID + ' - # of items:' + stockIssue.voucherItemRequests.length);
 	  this.warehouseService.addStockIssue(stockIssue).subscribe(res => {
-		this.alert.success('تمت الإضافة بنجاح');
-	  })
+		  this.alert.success('تمت الإضافة بنجاح');
+	  });
   }
 
   selectItem(item) {

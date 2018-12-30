@@ -21,17 +21,25 @@ export class WarehouseService {
     return this.http.get<Response<Spare>>(`${environment.apiUrl}/spare/getAll`);
   }
 
-  
+
   getPurchaseRequests() {
 	return this.http.get<Response<PurchaseRequest>>(`${environment.apiUrl}/vouchers/purchaserequest/getAll`);
   }
-  
+
   addPurchaseRequest(purchaseRequest: PurchaseRequest) {
     return this.http.post(`${environment.apiUrl}/vouchers/purchaserequest/create`, purchaseRequest);
   }
-  
+
+  getStockReceived() {
+    return this.http.get<Response<StockReceived>>(`${environment.apiUrl}/vouchers/stockreceived/getAll`);
+  }
+
   addStockReceived(stockReceived: StockReceived) {
     return this.http.post(`${environment.apiUrl}/vouchers/stockreceived/create`, stockReceived);
+  }
+
+  getStockIssue() {
+    return this.http.get<Response<StockIssue>>(`${environment.apiUrl}/vouchers/stockissue/getAll`);
   }
 
   addStockIssue(stockIssue: StockIssue) {

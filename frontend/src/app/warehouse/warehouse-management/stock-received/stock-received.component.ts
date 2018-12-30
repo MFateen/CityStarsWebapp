@@ -65,20 +65,16 @@ export class StockReceivedComponent implements OnInit, AfterViewInit {
       date: ['', Validators.required],
       purchaseRequests: ['', Validators.required],
     });
-	
+
 	this.filteredCodes = this.itemForm.get('spareType').valueChanges
       .pipe(
         startWith(''),
         map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
       );
   }
-  
+
   private _filterSpareTypes(spareType): SpareType[] {
     return this.spareTypes.filter(st => st.name.indexOf(spareType) === 0);
-  }
-  
-  private _filterPurchaseRequests(purchaseRequests): PurchaseRequest[] {
-    return this.purchaseRequests.filter(pr => pr.id.indexOf(purchaseRequests) === 0);
   }
 
   ngAfterViewInit() {

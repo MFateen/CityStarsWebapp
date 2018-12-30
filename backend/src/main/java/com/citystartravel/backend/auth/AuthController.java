@@ -86,10 +86,4 @@ public class AuthController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
 
     }
-
-    @GetMapping("/ayhaga")
-    public int ayhaga() {
-        return 17000;
-    }
-
 }

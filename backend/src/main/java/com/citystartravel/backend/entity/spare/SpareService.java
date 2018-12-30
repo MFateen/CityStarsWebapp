@@ -87,7 +87,7 @@ public class SpareService {
                     spare.setAvailable(false);
                     spare.setBus(bus);
                     spareRepository.save(spare);
-                    String eventString = generateBusEventString(spare.getId(), spare.getSpareType().getName());
+                    String eventString = generateBusEventString(spare.getId(), spare.getSpareType().getName(), bus.getName());
                     busService.addBusEvents(bus, new BusEvent(BusEventType.SPARE_PART_ADDED, eventString), currentUser);
                 }
             }
@@ -98,10 +98,10 @@ public class SpareService {
         return true;
     }
 
-    private String generateBusEventString(long spareId, String spareName) {
+    private String generateBusEventString(long spareId, String spareName, String busName) {
         StringBuilder stringBuilder = new StringBuilder();
         Formatter formatter = new Formatter(stringBuilder);
-        formatter.format("تم صرف القطعة رقم %d%n من نوع %s.", spareId, spareName);
+        formatter.format("تم صرف القطعة رقم %d%n من نوع %s لأتوبيس %s.", spareId, spareName, busName);
         return stringBuilder.toString();
     }
 }

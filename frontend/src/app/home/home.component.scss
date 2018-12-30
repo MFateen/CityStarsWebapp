@@ -1,0 +1,10 @@
+@import "../../assets/variables";
+
+.clickable {
+  cursor: pointer;
+}
+
+.table-hover > tbody > tr.form-table-row:hover > td,
+.form-table-row > td {
+  background-color: #fff;
+}
