@@ -11,6 +11,7 @@ import com.citystartravel.backend.exception.AppException;
 import com.citystartravel.backend.payload.response.PagedResponse;
 import com.citystartravel.backend.security.CurrentUser;
 import com.citystartravel.backend.security.UserPrincipal;
+import com.citystartravel.backend.util.Mapper;
 import com.citystartravel.backend.util.UtilityMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class SpareService {
     @Autowired
     private SpareTypeService spareTypeService;
 
+    @Autowired
+    private Mapper<Spare, SpareResponse> mapper;
+
     private static final Logger logger = LoggerFactory.getLogger(SpareService.class);
 
     private UtilityMethods<Spare> utilityMethods = new UtilityMethods<>();
@@ -39,6 +43,10 @@ public class SpareService {
 
     public PagedResponse<Spare> getAllSpares(UserPrincipal currentUser, int page, int size) {
         return utilityMethods.getAll(spareRepository,currentUser,page,size);
+    }
+
+    public PagedResponse<SpareResponse> getAllSparesResponse(UserPrincipal currentUser, int page, int size) {
+        return mapSparePagesToDtoPages(utilityMethods.getAll(spareRepository,currentUser,page,size));
     }
 
     public Spare getSpareById(Long spareId, @CurrentUser UserPrincipal currentUser) {
@@ -57,6 +65,7 @@ public class SpareService {
                 if(voucherItem.getName() != null) {
                     Spare spare = new Spare(voucherItem.getName(), voucherItem.getSpareType(), (StockReceived) voucherItem.getVoucher());
                     spareRepository.save(spare);
+//                    spare.setSpareTypeID(voucherItem.getSpareType().getId());
                     spares.add(spare);
                 }
                 else {
@@ -64,6 +73,7 @@ public class SpareService {
                     String spareDefaultName = voucherItem.getSpareType().getName();
                     Spare spare = new Spare(spareDefaultName, voucherItem.getSpareType(), sr);
                     spareRepository.save(spare);
+//                    spare.setSpareTypeID(voucherItem.getSpareType().getId());
                     spares.add(spare);
                 }
             }
@@ -96,6 +106,16 @@ public class SpareService {
                         +bus.getName()+"]. Quantity available is: "+quantityAvailableOfSpareType);
         }
         return true;
+    }
+
+    // ---------------------------------- util ----------------------------------
+
+    private SpareResponse mapSpareToDto(Spare spare) {
+        return mapper.mapEntityToDto(spare, SpareResponse.class);
+    }
+
+    private PagedResponse<SpareResponse> mapSparePagesToDtoPages(PagedResponse<Spare> sparePagedResponse) {
+        return mapper.mapEntityPagesToDtoPages(sparePagedResponse, SpareResponse.class);
     }
 
     private String generateBusEventString(long spareId, String spareName, String busName) {

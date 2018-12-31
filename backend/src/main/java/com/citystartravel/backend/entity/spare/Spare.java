@@ -37,7 +37,9 @@ public class Spare extends UserDateAudit {
     @JoinColumn(name="bus_id")
     @JsonBackReference
     private Bus bus;
-
+//
+//    @Transient
+//    private long spareTypeID;
 
     public Spare() {}
 
@@ -45,20 +47,11 @@ public class Spare extends UserDateAudit {
         this.spareType = spareType;
     }
 
-    public Spare(SpareType spareType, StockReceived stockReceived) {
-        this.spareType = spareType;
-        this.stockReceived = stockReceived;
-    }
-
     public Spare(String name, SpareType spareType, StockReceived stockReceived) {
         this.name = name;
         this.spareType = spareType;
         this.stockReceived = stockReceived;
-    }
-
-    public Spare(SpareType spareType, String name) {
-        this.name = name;
-        this.spareType = spareType;
+//        this.spareTypeID = spareType.getId();
     }
 
     public long getId() {
@@ -116,4 +109,12 @@ public class Spare extends UserDateAudit {
     public void setBus(Bus bus) {
         this.bus = bus;
     }
+
+//    public long getSpareTypeID() {
+//        return spareTypeID;
+//    }
+//
+//    public void setSpareTypeID(long spareTypeID) {
+//        this.spareTypeID = spareTypeID;
+//    }
 }
