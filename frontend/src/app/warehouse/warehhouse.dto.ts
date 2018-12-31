@@ -11,6 +11,7 @@ export class Spare {
   available: boolean;
   spareType: SpareType;
   quantity: number;
+  spareTypeID: number;
 }
 
 export class VoucherItem {
@@ -29,6 +30,7 @@ export class PurchaseRequest {
   supplierCode: string;
   supplierName: string;
   voucherItemRequests: VoucherItem[];
+  voucherItems: VoucherItem[];
 }
 
 export class StockReceived {
