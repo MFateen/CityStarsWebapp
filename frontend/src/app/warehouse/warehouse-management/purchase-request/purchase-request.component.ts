@@ -29,6 +29,14 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   isViewInit = false;
   showItemForm = false;
 
+  @Input() set chosenPurchaseRequest( pr: PurchaseRequest) {
+    this.purchaseForm.controls['date'].setValue(pr.date);
+    this.purchaseForm.controls['needsRequest'].setValue(pr.needsRequest);
+    this.purchaseForm.controls['supplierCode'].setValue(pr.supplierCode);
+    this.purchaseForm.controls['supplierName'].setValue(pr.supplierName);
+    this.voucherItems = pr.voucherItemRequests;
+  }
+  @Input() isViewOnly: boolean;
   @Input()
   set showModal(show: boolean) {
     if (!this.isViewInit) {
@@ -62,6 +70,9 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (this.isViewOnly === undefined) {
+      this.isViewOnly = false;
+    }
     this.warehouseService.getSpareTypesList().subscribe(res => {
       this.spareTypes = res.content;
     });
@@ -87,6 +98,10 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
         startWith(''),
         map(st => st ? this._filterSpareTypes(st) : this.spareTypes.slice())
       );
+
+    if (this.isViewOnly) {
+      this.purchaseForm.disable();
+    }
   }
 
   private _filterSpareTypes(spareType): SpareType[] {

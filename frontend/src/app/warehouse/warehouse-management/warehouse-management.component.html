@@ -21,42 +21,17 @@
   </div>
   <hr>
 
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card card-white-body">
-        <h5 class="card-header">قطع الغيار</h5>
-        <div class="card-body text-right">
-          <div *ngFor="let spareType of spareTypes">
-            <mat-checkbox>   {{spareType.name}}   </mat-checkbox>
-          </div>
-          <button class="mt-3 btn btn-secondary btn-sm float-left mx-1"
-            (click)="filterSpareTypes()">
-            اعرض
-          </button>
-        </div>
+  <div class="col-md-12">
+    <nav>
+      <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="spares">قطع الغيار</a>
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="purchase-requests">طلبات الشراء</a>
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="stock-received">أُذونات الاضافة</a>
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="stock-issue">أُذونات الصرف</a>
       </div>
-    </div>
-
-    <div class="col-md-8">
-      <table class="table">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">اسم</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-toggle="collapse" class="clickable" *ngFor="let spare of spares">
-          <td>{{spare.id}}</td>
-          <td>{{spare.name}}</td>
-        </tr>
-        <tr class="collapse">
-          <td colspan="4">
-            <div>Hidden by default</div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    </nav>
+    <div class="tab-content">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </app-layout>

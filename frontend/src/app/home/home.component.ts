@@ -18,11 +18,6 @@ import {AlertService} from '../shared/services';
 })
 export class HomeComponent implements OnInit {
   currentUser: User;
-  users: User[] = [];
-
-  purchaseRequests: PurchaseRequest[] = [];
-  stockReceivedList: StockReceived[] = [];
-  stockIssueList: StockIssue[] = [];
 
   constructor(
     private warehouseService: WarehouseService,
@@ -31,22 +26,6 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loadAllUsers();
-    this.warehouseService.getPurchaseRequests().subscribe(res => {
-      this.purchaseRequests = res.content;
-    });
-    this.warehouseService.getStockReceived().subscribe(res => {
-      this.stockReceivedList= res.content;
-    });
-    this.warehouseService.getStockIssue().subscribe(res => {
-      this.stockIssueList= res.content;
-    })
-  }
 
-  private loadAllUsers() {
-    // this.userService.getAll().pipe(first()).subscribe(users => {
-    //   this.users = users;
-    // });
   }
-
 }

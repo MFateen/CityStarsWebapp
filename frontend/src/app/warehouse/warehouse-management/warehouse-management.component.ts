@@ -8,33 +8,17 @@ import {Spare, SpareType} from '../warehhouse.dto';
   styleUrls: ['./warehouse-management.component.scss']
 })
 export class WarehouseManagementComponent implements OnInit {
-
-
-  spareTypes: SpareType[] = [];
-  spares: Spare[] = [];
   showPurchase: boolean;
   showStockReceived: boolean;
   showStockIssue: boolean;
 
-  constructor(
-    private warehouseService: WarehouseService
-  ) {  }
+  constructor() {
+  }
 
   ngOnInit() {
     this.showPurchase = false;
     this.showStockReceived = false;
     this.showStockIssue = false;
-    this.warehouseService.getSpareTypesList().subscribe(
-      res => {
-        this.spareTypes = res.content;
-      }
-    );
-
-    this.warehouseService.getSparesList().subscribe(
-      res => {
-        this.spares = res.content;
-      }
-    );
   }
 
   onPurchaseClick() {
@@ -48,7 +32,4 @@ export class WarehouseManagementComponent implements OnInit {
   onStockIssueClick() {
     this.showStockIssue = !this.showStockIssue;
   }
-
-
-
 }

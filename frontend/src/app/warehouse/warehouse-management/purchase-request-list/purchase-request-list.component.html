@@ -1,0 +1,33 @@
+<div class="col-md-12">
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">رقم طلب الشراء</th>
+      <th scope="col">التاريخ</th>
+      <th scope="col">الرابط</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-toggle="collapse" class="clickable" *ngFor="let pr of purchaseRequests">
+
+      <td>{{pr.id}}</td>
+      <td>
+        <time>
+          <span>{{ pr.date | date}}</span>
+        </time>
+      </td>
+      <td>
+        <button class="mt-3 btn btn-secondary btn-sm float-left mx-1" (click)="onDetailsClick(pr)">
+          التفاصيل
+        </button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-purchase-request
+  [showModal]="showPurchaseDetails"
+  [isViewOnly]="true"
+  [chosenPurchaseRequest]="chosenPurchaseRequest"></app-purchase-request>

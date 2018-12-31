@@ -2,7 +2,8 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">طلب شراء جديد</h4>
+        <h4 class="modal-title" *ngIf="!isViewOnly">طلب شراء جديد</h4>
+        <h4 class="modal-title" *ngIf="isViewOnly">طلب شراء</h4>
         <div class="col m-0 p-0">
           <button type="button" class="float-left close" (click)="hidePurchaseModal()">
             <fa-icon icon="times"></fa-icon>

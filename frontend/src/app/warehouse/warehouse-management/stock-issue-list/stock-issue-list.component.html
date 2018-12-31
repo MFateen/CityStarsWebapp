@@ -1,0 +1,28 @@
+<div class="col-md-12">
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">رقم إذن الصرف</th>
+      <th scope="col">التاريخ</th>
+      <th scope="col">الرابط</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-toggle="collapse" class="clickable" *ngFor="let si of stockIssueList">
+
+      <td>{{si.id}}</td>
+      <td>
+        <time>
+          <span>{{ si.date | date}}</span>
+        </time>
+      </td>
+      <td>
+        <button class="mt-3 btn btn-secondary btn-sm float-left mx-1">
+          التفاصيل
+        </button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
