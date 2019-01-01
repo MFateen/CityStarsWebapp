@@ -1,6 +1,7 @@
 package com.citystartravel.backend.entity.voucher.item;
 
 import com.citystartravel.backend.entity.sparetype.SpareType;
+import com.citystartravel.backend.entity.sparetype.SpareTypeRequest;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.Voucher;
 import com.citystartravel.backend.entity.voucher.VoucherDto;
@@ -24,6 +25,9 @@ public class VoucherUtility {
 
     @Autowired
     private Mapper<VoucherItemRequest, VoucherItem> mapper_VIR_VI;
+
+    @Autowired
+    private Mapper<VoucherItem, VoucherItemRequest> mapper_VI_VIR;
 
     /**
      * Creates a list of VoucherItems from a list of VoucherItemRequest. If the spareTypeID = -1, this sparetype needs to
@@ -51,5 +55,19 @@ public class VoucherUtility {
             voucherItems.add(voucherItem);
         }
         return voucherItems;
+    }
+
+    public List<VoucherItemRequest> getVoucherItemsDtos(VoucherDto dto,
+                                                        UserPrincipal currentUser,
+                                                        Voucher voucher) {
+        List<VoucherItem> voucherItems = voucher.getVoucherItems();
+        List<VoucherItemRequest> voucherItemDtos = new ArrayList<>();
+
+        for(VoucherItem voucherItem : voucherItems) {
+            VoucherItemRequest voucherItemRequest = mapper_VI_VIR.mapEntityToDto(voucherItem, VoucherItemRequest.class);
+            voucherItemRequest.setSpareType(new SpareTypeRequest(voucherItem.getSpareType().getId(), voucherItem.getSpareType().getName()));
+            voucherItemDtos.add(voucherItemRequest);
+        }
+        return voucherItemDtos;
     }
 }

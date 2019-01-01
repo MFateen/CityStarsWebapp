@@ -9,7 +9,7 @@
             <div *ngIf="event.type == EVENT_TYPES.SIGNAL_ISSUE" class="cbp_tmicon bg-orange"><fa-icon [icon]="['fas', 'exclamation']"></fa-icon></div>
             <div *ngIf="event.type == EVENT_TYPES.RESOLVE_ISSUE" class="cbp_tmicon bg-green"><fa-icon [icon]="['fas', 'check']"></fa-icon></div>
             <div *ngIf="event.type == EVENT_TYPES.GENERAL" class="cbp_tmicon bg-info"><fa-icon [icon]="['fas', 'info']"></fa-icon></div>
-            <div *ngIf="event.type == EVENT_TYPES.TRIP_SCEHDULED" class="cbp_tmicon bg-blush"><fa-icon [icon]="['far', 'calendar-check']"></fa-icon></div>
+            <div *ngIf="event.type == EVENT_TYPES.TRIP_SCHEDULED" class="cbp_tmicon bg-blush"><fa-icon [icon]="['far', 'calendar-check']"></fa-icon></div>
             <div *ngIf="event.type == EVENT_TYPES.SPARE_PART_ADDED" class="cbp_tmicon bg-blush"><fa-icon [icon]="['fas', 'toolbox']"></fa-icon></div>
           </div>
           <div class="cbp_tmlabel"> <span>{{event.text}}</span> </div>

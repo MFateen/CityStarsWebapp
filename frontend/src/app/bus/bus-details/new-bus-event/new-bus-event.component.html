@@ -22,7 +22,26 @@
             <input matInput formControlName="busCondition" placeholder="حالة الأتوبيس">
           </mat-form-field>
           <mat-form-field class="col-md-6">
-            <input matInput formControlName="busEventType" placeholder="نوع الملاحظة">
+            <!--<input matInput formControlName="busEventType" placeholder="نوع الملاحظة">-->
+            <mat-select formControlName="busEventType" placeholder="نوع الملاحظة">
+              <mat-option *ngFor="let eventType of busEventTypesList" [value]="eventType">
+                <span>{{getBusEventInArabic(eventType)}}</span>
+                <!--<span *ngIf="eventType == EVENT_TYPES.GENERAL" >ملاحظات أخرى</span>-->
+                <!--<span *ngIf="eventType == EVENT_TYPES.RESOLVE_ISSUE" >حل مشكلة سابقة</span>-->
+
+
+                <!--<span>{{eventType}}</span>-->
+
+
+
+                <!--<div *ngIf="eventType == EVENT_TYPES.SIGNAL_ISSUE" ><span>عطل جديد</span></div>
+                <div *ngIf="eventType == EVENT_TYPES.GENERAL" ><span>ملاحظات أخرى</span></div>
+                <div *ngIf="eventType == EVENT_TYPES.RESOLVE_ISSUE" ><span>حل مشكلة سابقة</span></div>-->
+
+                <!--<span *ngIf="eventType == EVENT_TYPES.GENERAL" >ملاحظات أخرى</span>-->
+                <!--<span *ngIf="eventType == EVENT_TYPES.RESOLVE_ISSUE" >حل مشكلة سابقة</span>-->
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <button type="submit" class="btn btn-secondary btn-sm float-left mt-3">
