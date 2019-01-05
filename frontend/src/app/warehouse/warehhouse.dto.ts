@@ -30,7 +30,7 @@ export class PurchaseRequest {
   supplierCode: string;
   supplierName: string;
   voucherItemRequests: VoucherItem[];
-  voucherItems: VoucherItem[];
+  // voucherItems: VoucherItem[];
 }
 
 export class StockReceived {

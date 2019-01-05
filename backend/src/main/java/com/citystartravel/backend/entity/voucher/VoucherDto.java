@@ -9,18 +9,29 @@ import java.util.List;
 
 public class VoucherDto {
 
-    private Date date;
 
+    private Long id;
+    private Date date;
     private String supplierCode;
     private String supplierName;
     private String supplierInvoice;
     private String deliveryNote;
     private String inspectionVoucher;
+    private String needsRequest;
+    private String address;
 
     private List<VoucherItemRequest> voucherItemRequests = new ArrayList<>();
 
 
     public VoucherDto() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;
@@ -75,6 +86,23 @@ public class VoucherDto {
     }
 
     public void setVoucherItemRequests(List<VoucherItemRequest> voucherItemRequests) {
-        this.voucherItemRequests = voucherItemRequests;
+        this.voucherItemRequests.retainAll(voucherItemRequests);
+        this.voucherItemRequests.addAll(voucherItemRequests);
+    }
+
+    public String getNeedsRequest() {
+        return needsRequest;
+    }
+
+    public void setNeedsRequest(String needsRequest) {
+        this.needsRequest = needsRequest;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

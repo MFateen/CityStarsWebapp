@@ -74,6 +74,7 @@ public class StockReceivedService {
 
     private StockReceived mapDtoToEntity(StockReceivedDtoRequest dto, StockReceived stockReceived, @CurrentUser UserPrincipal currentUser) {
         // creates new PRV from PRVRequest
+        dto.setId(stockReceived.getId());
         mapper.mapEntityToDto(dto, stockReceived);
         // handle voucher items
         List<VoucherItem> voucherItems = voucherUtility.getVoucherItemsFromRequest(dto, currentUser, stockReceived);

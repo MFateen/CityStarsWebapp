@@ -16,8 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "voucher")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "voucher_type")
 public class Voucher extends UserDateAudit {
 
     @Id

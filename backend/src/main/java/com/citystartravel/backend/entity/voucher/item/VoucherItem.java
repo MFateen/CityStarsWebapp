@@ -20,9 +20,6 @@ public class VoucherItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long serialNo;
 
-    @Transient
-    private long spareTypeID;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     @JsonIgnore
@@ -73,14 +70,6 @@ public class VoucherItem {
 
     public void setSerialNo(long serialNo) {
         this.serialNo = serialNo;
-    }
-
-    public long getSpareTypeID() {
-        return spareTypeID;
-    }
-
-    public void setSpareTypeID(long spareTypeID) {
-        this.spareTypeID = spareTypeID;
     }
 
     public SpareType getSpareType() {

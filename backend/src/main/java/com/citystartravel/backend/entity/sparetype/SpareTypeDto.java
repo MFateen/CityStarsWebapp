@@ -1,18 +1,14 @@
 package com.citystartravel.backend.entity.sparetype;
 
-public class SpareTypeRequest {
+public class SpareTypeDto {
 
     private long id;
 
     private String name;
 
-    public SpareTypeRequest() {}
+    public SpareTypeDto() {}
 
-    public SpareTypeRequest(String name) {
-        this.name = name;
-    }
-
-    public SpareTypeRequest(long id, String name) {
+    public SpareTypeDto(long id, String name) {
         this.id = id;
         this.name = name;
     }

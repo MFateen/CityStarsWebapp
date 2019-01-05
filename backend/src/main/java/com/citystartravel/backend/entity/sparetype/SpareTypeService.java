@@ -16,41 +16,30 @@ public class SpareTypeService {
     @Autowired
     private SpareTypeRepository spareTypeRepository;
 
+    @Autowired
+    private Mapper<SpareType, SpareTypeDto> mapper;
+
     private static final Logger logger = LoggerFactory.getLogger(SpareTypeService.class);
 
     private UtilityMethods<SpareType> utilityMethods = new UtilityMethods<>();
 
-    @Autowired
-    private Mapper<SpareType, SpareTypeDtoResponse> mapper;
-
-    /*public PagedResponse<SpareTypeDtoResponse> getAllSpareTypes(UserPrincipal currentUser, int page, int size) {
-        return mapSpareTypePagesToDtoPages(utilityMethods.getAll(spareTypeRepository,currentUser,page,size));
-
-    }*/
-
-    public PagedResponse<SpareType> getAllSpareTypes(UserPrincipal currentUser, int page, int size) {
-        return utilityMethods.getAll(spareTypeRepository,currentUser,page,size);
-
+    public PagedResponse<SpareTypeDto> getAllSpareTypes(UserPrincipal currentUser, int page, int size) {
+        PagedResponse<SpareType> pagedResponse = utilityMethods.getAll(spareTypeRepository,currentUser,page,size);
+        return mapper.mapEntityPagesToDtoPages(pagedResponse,SpareTypeDto.class);
     }
 
     public SpareType getSpareTypeById(Long spareTypeId, @CurrentUser UserPrincipal currentUser) {
         return utilityMethods.getById(spareTypeRepository, currentUser, spareTypeId,"SpareType");
     }
 
-    public SpareTypeDtoResponse getSpareTypeDtoById(Long spareTypeId, @CurrentUser UserPrincipal currentUser) {
-        SpareType spareType = utilityMethods.getById(spareTypeRepository, currentUser, spareTypeId,"SpareType");
-        return mapper.mapEntityToDto(spareType, SpareTypeDtoResponse.class);
-    }
-
-    public SpareType createSpareType(SpareTypeRequest spareTypeRequest) {
+    public SpareType createSpareType(SpareTypeDto spareTypeDto) {
         SpareType spareType = new SpareType();
-        spareType.setName(spareTypeRequest.getName());
+        spareType.setName(spareTypeDto.getName());
+        spareType = spareTypeRepository.save(spareType);
         logger.info("[CREATED] SpareType "+spareType.getName()+" Created.");
-        return spareTypeRepository.save(spareType);
+        return spareType;
     }
 
     // ---------------------------------- util ----------------------------------
-    private PagedResponse<SpareTypeDtoResponse> mapSpareTypePagesToDtoPages(PagedResponse<SpareType> spareTypePagedResponse) {
-        return mapper.mapEntityPagesToDtoPages(spareTypePagedResponse, SpareTypeDtoResponse.class);
-    }
+
 }

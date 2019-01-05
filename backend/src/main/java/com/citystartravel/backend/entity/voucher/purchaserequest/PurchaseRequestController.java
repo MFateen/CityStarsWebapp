@@ -1,5 +1,6 @@
 package com.citystartravel.backend.entity.voucher.purchaserequest;
 
+import com.citystartravel.backend.entity.voucher.VoucherDto;
 import com.citystartravel.backend.entity.voucher.item.VoucherUtility;
 import com.citystartravel.backend.payload.response.ApiResponse;
 import com.citystartravel.backend.payload.response.PagedResponse;
@@ -40,6 +41,21 @@ public class PurchaseRequestController {
         }
     }
 
+    @GetMapping("/getPRVs")
+    public ResponseEntity<?> getPRVs(@CurrentUser UserPrincipal currentUser,
+                                                        @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                        @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        try{
+            PagedResponse<VoucherDto> purchaseRequestVouchers = purchaseRequestService.getAll(currentUser, page, size);
+            return ResponseEntity.ok(purchaseRequestVouchers);
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return new ResponseEntity<>(
+                    new ApiResponse(false,"Unable to fetch Purchase Request Vouchers."),HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/get")
     public ResponseEntity<?> getPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
                       @RequestParam(value = "id") Long id) {
@@ -56,9 +72,9 @@ public class PurchaseRequestController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createPurchaseRequestVoucher(@CurrentUser UserPrincipal currentUser,
-                                       @RequestBody PurchaseRequestDtoRequest purchaseRequestDtoRequest) {
+                                       @RequestBody PurchaseRequestDto purchaseRequestDto) {
         try{
-            PurchaseRequest purchaseRequest = purchaseRequestService.createPurchaseRequestVoucher(purchaseRequestDtoRequest, currentUser);
+            PurchaseRequest purchaseRequest = purchaseRequestService.createPurchaseRequestVoucher(purchaseRequestDto, currentUser);
             return ResponseEntity.ok(purchaseRequest);
         }
         catch (Exception ex) {

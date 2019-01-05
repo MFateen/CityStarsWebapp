@@ -38,7 +38,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
     this.purchaseForm.controls['needsRequest'].setValue(pr.needsRequest);
     this.purchaseForm.controls['supplierCode'].setValue(pr.supplierCode);
     this.purchaseForm.controls['supplierName'].setValue(pr.supplierName);
-    this.voucherItems = pr.voucherItems;
+    this.voucherItems = pr.voucherItemRequests;
   }
   @Input() isViewOnly: boolean;
   @Input()

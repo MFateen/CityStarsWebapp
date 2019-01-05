@@ -23,7 +23,8 @@ export class WarehouseService {
 
 
   getPurchaseRequests() {
-	return this.http.get<Response<PurchaseRequest>>(`${environment.apiUrl}/vouchers/purchaserequest/getAll`);
+	//return this.http.get<Response<PurchaseRequest>>(`${environment.apiUrl}/vouchers/purchaserequest/getAll`);
+	return this.http.get<Response<PurchaseRequest>>(`${environment.apiUrl}/vouchers/purchaserequest/getPRVs`);
   }
 
   addPurchaseRequest(purchaseRequest: PurchaseRequest) {

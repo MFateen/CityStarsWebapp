@@ -1,11 +1,10 @@
 package com.citystartravel.backend.entity.voucher.item;
 
 import com.citystartravel.backend.entity.sparetype.SpareType;
-import com.citystartravel.backend.entity.sparetype.SpareTypeRequest;
+import com.citystartravel.backend.entity.sparetype.SpareTypeDto;
 import com.citystartravel.backend.entity.sparetype.SpareTypeService;
 import com.citystartravel.backend.entity.voucher.Voucher;
 import com.citystartravel.backend.entity.voucher.VoucherDto;
-import com.citystartravel.backend.entity.voucher.purchaserequest.PurchaseRequestDtoRequest;
 import com.citystartravel.backend.security.UserPrincipal;
 import com.citystartravel.backend.util.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,7 @@ public class VoucherUtility {
     public List<VoucherItem> getVoucherItemsFromRequest(VoucherDto dto,
                                                         UserPrincipal currentUser,
                                                         Voucher voucher) {
+        dto.setId(voucher.getId());
         List<VoucherItemRequest> voucherItemRequests = dto.getVoucherItemRequests();
         List<VoucherItem> voucherItems = new ArrayList<>();
         SpareType spareType;
@@ -65,7 +65,7 @@ public class VoucherUtility {
 
         for(VoucherItem voucherItem : voucherItems) {
             VoucherItemRequest voucherItemRequest = mapper_VI_VIR.mapEntityToDto(voucherItem, VoucherItemRequest.class);
-            voucherItemRequest.setSpareType(new SpareTypeRequest(voucherItem.getSpareType().getId(), voucherItem.getSpareType().getName()));
+            voucherItemRequest.setSpareType(new SpareTypeDto(voucherItem.getSpareType().getId(), voucherItem.getSpareType().getName()));
             voucherItemDtos.add(voucherItemRequest);
         }
         return voucherItemDtos;

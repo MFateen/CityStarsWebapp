@@ -77,6 +77,7 @@ public class StockIssueService {
     // ---------------------------------- util ----------------------------------
 
     private StockIssue createStockIssueFromDto(StockIssueDtoRequest dto, StockIssue stockIssue, @CurrentUser UserPrincipal currentUser) {
+        dto.setId(stockIssue.getId());
         mapper.mapEntityToDto(dto, stockIssue);
         // handle voucher items
         List<VoucherItem> voucherItems = voucherUtility.getVoucherItemsFromRequest(dto, currentUser, stockIssue);

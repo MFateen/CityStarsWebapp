@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PurchaseRequestDtoRequest extends VoucherDto {
+public class PurchaseRequestDto extends VoucherDto {
 
     private String needsRequest;
 
     private String address;
 
-    public PurchaseRequestDtoRequest() {}
+    public PurchaseRequestDto() {}
 
     public String getNeedsRequest() {
         return needsRequest;
