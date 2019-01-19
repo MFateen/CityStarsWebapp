@@ -1,5 +1,30 @@
 <app-layout>
-  <p>
-    profile works!
-  </p>
+  <div class="col-md-12">
+    <div class="card card-white-body">
+      <h5 class="card-header">
+        الصفحة الشخصية:
+        <span>{{name}}</span>
+      </h5>
+      <div class="card-body text-right">
+        تغير كلمة السر
+        <br>
+        <form [formGroup]="profileForm">
+          <mat-form-field class="col-md-12">
+            <input matInput formControlName="currentPassword" placeholder="كلمة السر الحالية">
+          </mat-form-field>
+          <mat-form-field class="col-md-12">
+            <input matInput formControlName="newPassword" placeholder="كلمة السر الجديدة">
+          </mat-form-field>
+          <mat-form-field class="col-md-12">
+            <input matInput formControlName="confirmPassword" placeholder="تأكيد كلمة السر">
+          </mat-form-field>
+
+          <button class="btn btn-secondary btn-sm float-left mt-3" (click)="changePassword()">
+            تغير كلمة السر
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </app-layout>
+

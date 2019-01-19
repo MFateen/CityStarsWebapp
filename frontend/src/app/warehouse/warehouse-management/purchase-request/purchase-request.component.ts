@@ -33,7 +33,6 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
     if (!this.purchaseForm) {
       return;
     }
-    console.log(pr);
     this.purchaseForm.controls['date'].setValue(pr.date);
     this.purchaseForm.controls['needsRequest'].setValue(pr.needsRequest);
     this.purchaseForm.controls['supplierCode'].setValue(pr.supplierCode);
@@ -53,25 +52,7 @@ export class PurchaseRequestComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private warehouseService: WarehouseService,
     private alert: AlertService
-  ) {
-    // let st = new SpareType();
-    // st.name = 'واحد';
-    // st.id = 0;
-    // st.serialNo = 1234;
-    // this.spareTypes.push(st);
-    //
-    // st = new SpareType();
-    // st.name = 'ولد';
-    // st.id = 0;
-    // st.serialNo = 1234;
-    // this.spareTypes.push(st);
-    //
-    // st = new SpareType();
-    // st.name = 'آه';
-    // st.id = 0;
-    // st.serialNo = 1234;
-    // this.spareTypes.push(st);
-  }
+  ) { }
 
   ngOnInit() {
     if (this.isViewOnly === undefined) {

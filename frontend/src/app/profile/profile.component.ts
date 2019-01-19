@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  name: string = 'مصطفى فطين';
+  profileForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder
+  ) {
+  }
 
   ngOnInit() {
+    this.profileForm = this.fb.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
+  }
+
+  changePassword() {
+    
   }
 
 }
